@@ -6,7 +6,7 @@
 /*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:35:46 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/26 22:01:38 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/27 02:34:56 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 	char	*str;
 	int		len;
 
+	if (s1 == NULL)
+		return (create_empty_string());
 	start = find_start(s1, set);
 	end = find_end(s1, set);
 	if (start > end)

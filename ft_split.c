@@ -6,7 +6,7 @@
 /*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:12:20 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/27 02:06:58 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/27 02:39:25 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,8 @@ char	**ft_split(const char *s, char c)
 	char	**str_arr;
 	int		word_cnt;
 
+	if (s == NULL)
+		return (NULL);
 	word_cnt = (nbr_of_words((char *)s, c));
 	if (word_cnt == 0)
 	{
