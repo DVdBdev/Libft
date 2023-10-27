@@ -3,101 +3,120 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvan-den <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 17:12:20 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/19 18:15:38 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/27 02:06:58 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_words(const char *str, char c)
+static char	*split_substr(char const *s, unsigned int start, size_t len)
 {
-	int	count;
-	int	is_in_word;
-	int	i;
+	char	*substr;
+	size_t	i;
 
-	count = 0;
-	is_in_word = 0;
+	substr = (char *)malloc(sizeof(char) * (len + 1));
+	if (substr == NULL)
+		return (NULL);
 	i = 0;
-	while (str[i])
+	while (i < len)
 	{
-		if (str[i] == c)
-			is_in_word = 0;
-		else if (!is_in_word)
-		{
-			is_in_word = 1;
-			count++;
-		}
+		substr[i] = s[start + i];
 		i++;
 	}
-	return (count);
+	substr[i] = '\0';
+	return (substr);
 }
 
-static void	copy_word(char *word, char *str, char c, int j)
+static int	nbr_of_words(char *s, char c)
+{
+	int	nbr_of_c;
+	int	i;
+
+	i = 0;
+	nbr_of_c = 0;
+	if (*s == '\0')
+		return (0);
+	while (s[i] != '\0')
+	{
+		if (s[i] != c)
+		{
+			while (s[i] != c && s[i] != '\0')
+				i++;
+			nbr_of_c++;
+		}
+		else
+			i++;
+	}
+	return (nbr_of_c);
+}
+
+static void	free_all(char **str_arr)
 {
 	int	i;
 
 	i = 0;
-	while (str[j] != '\0' && str[j] == c)
+	while (str_arr[i])
+	{
+		free(str_arr[i]);
+		str_arr[i] = NULL;
+		i++;
+	}
+	free(str_arr);
+}
+
+static char	**splitting(char **str_arr, char *s, char c, int nbr_of)
+{
+	int	i;
+	int	j;
+	int	len;
+
+	len = 0;
+	j = 0;
+	i = 0;
+	while (j < nbr_of)
+	{
+		while (s[i] == c)
+			i++;
+		while (s[i + len] != c && s[i + len] != '\0')
+			len++;
+		str_arr[j] = split_substr(s, i, len);
+		if (str_arr[j] == NULL)
+		{
+			free_all(str_arr);
+			return (NULL);
+		}
+		i = i + len;
+		len = 0;
 		j++;
-	while (str[j + i] != c && str[j + i] != '\0')
-	{
-		word[i] = str[j + i];
-		i++;
 	}
-	word[i] = '\0';
+	str_arr[nbr_of] = NULL;
+	return (str_arr);
 }
 
-static char	*ft_stralloc(char *str, char c, int *k)
+char	**ft_split(const char *s, char c)
 {
-	char	*word;
-	int		j;
+	char	**str_arr;
+	int		word_cnt;
 
-	j = *k;
-	word = NULL;
-	while (str[*k] != '\0')
+	word_cnt = (nbr_of_words((char *)s, c));
+	if (word_cnt == 0)
 	{
-		if (str[*k] != c)
-		{
-			while (str[*k] != '\0' && str[*k] != c)
-				*k += 1;
-			word = (char *)malloc(sizeof(char) * (*k + 1));
-			if (word == NULL)
-				return (NULL);
-			break ;
-		}
-		*k += 1;
+		str_arr = (char **)malloc(sizeof(char *) * 1);
+		if (!str_arr)
+			return (NULL);
+		str_arr[0] = NULL;
 	}
-	copy_word(word, str, c, j);
-	return (word);
-}
-
-char	**ft_split(char const *str, char c)
-{
-	char	**strs;
-	int		i;
-	int		j;
-	int		pos;
-
-	if (str == NULL)
-		return (NULL);
-	i = 0;
-	pos = 0;
-	j = count_words((char *)str, c);
-	strs = (char **)malloc(sizeof(char *) * (j + 1));
-	if (strs == NULL)
-		return (NULL);
-	strs[j] = NULL;
-	while (i < j)
+	else
 	{
-		strs[i] = ft_stralloc(((char *)str), c, &pos);
-		if (strs[i] == NULL)
-		{
-			free(strs[i]);
-		}
-		i++;
+		str_arr = (char **)malloc(sizeof(char *) * (word_cnt + 1));
+		if (!str_arr)
+			return (NULL);
+		str_arr = splitting(str_arr, (char *)s, c, word_cnt);
+		if (!str_arr)
+			return (NULL);
 	}
-	return (strs);
+	return (str_arr);
 }

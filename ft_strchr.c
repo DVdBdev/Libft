@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvan-den <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:28:32 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/19 19:29:43 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/27 01:48:06 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strchr(const char *s, int c)
+char	*ft_strchr(const char *str, int c)
 {
-	while (*s)
+	unsigned char	target;
+
+	target = (unsigned char)c;
+	while (*str)
 	{
-		if (*s == c)
-			return ((char *)s);
-		s++;
+		if (*str == target)
+			return ((char *)str);
+		str++;
 	}
-	if (c == '\0')
-		return ((char *)s);
+	if (target == '\0')
+		return ((char *)str);
 	return (NULL);
 }

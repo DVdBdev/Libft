@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvan-den <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 19:31:12 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/19 19:32:29 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/27 01:50:32 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,18 @@
 
 char	*ft_strrchr(const char *s, int c)
 {
-	char	*last;
+	unsigned char	target;
+	char			*last;
 
+	target = (unsigned char)c;
 	last = NULL;
 	while (*s)
 	{
-		if (*s == c)
+		if (*s == target)
 			last = (char *)s;
 		s++;
 	}
-	if (c == '\0')
+	if (target == '\0')
 		return ((char *)s);
 	return (last);
 }

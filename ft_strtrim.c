@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvan-den <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 11:35:46 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/19 16:28:11 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/26 22:01:38 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,6 @@ static int	find_start(char const *str, char const *set)
 	return (i);
 }
 
-/*static int	find_start(char const *str, char const *set)
-{
-	int	i;
-	int	j;
-	int	set_len;
-
-	i = 0;
-	set_len = ft_strlen(set);
-	while (str[i])
-	{
-		j = 0;
-		while (set[j])
-		{
-			if (str[i + j] != set[j])
-				return (i);
-			j++;
-		}
-		i = i + j;
-	}
-	return (i);
-}*/
-
 static int	find_end(char const *str, char const *set)
 {
 	int	i;
@@ -76,30 +54,15 @@ static int	find_end(char const *str, char const *set)
 	return (i);
 }
 
-/*static int	find_end(char const *str, char const *set)
+static char	*create_empty_string(void)
 {
-	int	i;
-	int	j;
-	int	k;
-	int	set_len;
+	char	*empty_str;
 
-	i = ft_strlen(str) - 1;
-	set_len = ft_strlen(set);
-	while (i >= 0)
-	{
-		j = set_len - 1;
-		k = 0;
-		while (j >= 0)
-		{
-			if (str[i - k] != set[j])
-				return (i);
-			j--;
-			k++;
-		}
-		i = i - k;
-	}
-	return (i);
-}*/
+	empty_str = (char *)malloc(1);
+	if (empty_str)
+		empty_str[0] = '\0';
+	return (empty_str);
+}
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
@@ -111,6 +74,8 @@ char	*ft_strtrim(char const *s1, char const *set)
 
 	start = find_start(s1, set);
 	end = find_end(s1, set);
+	if (start > end)
+		return (create_empty_string());
 	i = 0;
 	len = ft_strlen(s1);
 	str = (char *)malloc(end - start + 2);
@@ -125,12 +90,3 @@ char	*ft_strtrim(char const *s1, char const *set)
 	str[i] = '\0';
 	return (str);
 }
-
-/*int     main(int argc, char *argv[])
-{
-        if (argc != 3)
-                return (0);
-        printf("%s\n", ft_strtrim(argv[1], argv[2]));
-        //printf("%d\n", find_end(argv[1], argv[2]));
-        return (0);
-}*/

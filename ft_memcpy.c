@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvan-den <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/19 18:35:46 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/19 18:38:04 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/27 01:43:39 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 void	*ft_memcpy(void *dest, const void *src, size_t n)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
-	size_t				i;
+	size_t	i;
+	char	*d;
+	char	*s;
 
-	d = dest;
-	s = src;
+	if (!dest && !src)
+		return (0);
 	i = 0;
+	d = (char *)dest;
+	s = (char *)src;
 	while (i < n)
 	{
 		d[i] = s[i];

@@ -3,43 +3,46 @@
 /*                                                        :::      ::::::::   */
 /*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dvan-den <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: dvan-den <dvan-den@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 10:26:58 by dvan-den          #+#    #+#             */
-/*   Updated: 2023/10/17 11:23:57 by dvan-den         ###   ########.fr       */
+/*   Updated: 2023/10/26 21:55:31 by dvan-den         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+static char	*create_empty_string(void)
+{
+	char	*empty_str;
+
+	empty_str = (char *)malloc(1);
+	if (empty_str)
+		empty_str[0] = '\0';
+	return (empty_str);
+}
 
 char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
 	unsigned int	i;
 	unsigned int	j;
 	char			*substr;
+	size_t			s_len;
 
-	i = 0;
-	j = 0;
+	if (!s)
+		return (NULL);
+	s_len = ft_strlen(s);
+	if (start >= s_len)
+		return (create_empty_string());
+	if (len > s_len - start)
+		len = s_len - start;
 	substr = (char *)malloc(sizeof(*s) * (len + 1));
 	if (!substr)
 		return (NULL);
-	while (s[i])
-	{
-		if (i >= start && j < len)
-		{
-			substr[j] = s[i];
-			j++;
-		}
-		i++;
-	}
+	i = start;
+	j = 0;
+	while (s[i] && j < len)
+		substr[j++] = s[i++];
 	substr[j] = '\0';
 	return (substr);
 }
-
-/*int     main(int argc, char *argv[])
-{
-	if (argc != 4)
-		return (0);
-        printf("%s", ft_substr(argv[1], atoi(argv[2]), atoi(argv[3])));
-        return (0);
-}*/
